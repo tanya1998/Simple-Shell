@@ -4,7 +4,8 @@
 #include <stdlib.h>
 #include <string.h>
 int main(int argn, char *argc[])
-{
+{	
+	
 	if(argn<=1)
 	{
 		printf("Invalid Command:- More Parameters expected");
@@ -25,12 +26,42 @@ int main(int argn, char *argc[])
 			}
 			
 	}
-	if(argn ==4 && strcmp("-m",argc[1])==0)
+	if(argn ==3 && strcmp("-v",argc[1])==0)
 	{
-		if(mkdir(argc[4],atoi(argc[3]))!=0)
-			{printf("Directory already exists");
+		if(mkdir(argc[2],S_IRWXU | S_IRGRP| S_IXGRP | S_IROTH | S_IXOTH )!=0)
+			{printf("mkdir: cannot create directory ‘%s’: File exists",argc[2]);
 			exit(0);
 			}
+		else
+		{
+			printf("mkdir: created directory '%s'",argc[2]);
+		}
+	}
+	if(argn ==3 && strcmp("-p",argc[1])==0)
+	{
+		char *arg = strtok(argc[2],"/");
+		int p =0;
+		char *argv[256];
+		while(arg!='\0')
+	
+		{	
+		argv[p] = arg;
+		arg = strtok (NULL,"/");
+		p++;
+		}
+		int k = p;
+		for(p=0;p<k;p++)
+		{
+			if(mkdir(argv[p],S_IRWXU | S_IRGRP| S_IXGRP | S_IROTH | S_IXOTH)==0)
+			{
+			}
+			else
+			{
+			
+			}
+			chdir(argv[p]);
+		}
+		
 	}
 	return 0;
 }
