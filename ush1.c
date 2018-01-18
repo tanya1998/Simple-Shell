@@ -8,6 +8,7 @@ int main()
 char cmd[256];
 char *arg ;
 char *argv[256];
+char *arguments[256];
 while(1)
 {	
 	printf("gsh:>");
@@ -30,7 +31,9 @@ while(1)
 		arg = strtok (NULL," ");
 		i++;
 		}
-		//printf("argv[1]: %s , argv[0]: %s",argv[1],argv[0]); 
+		char path[] = "/home/tanya/";
+		strcat(path,argv[0]);
+		printf(argv[0]);
 		//builtin for cd 
 		if(strcmp(argv[0],"cd")==0)
 		{
@@ -42,16 +45,30 @@ while(1)
 		{
 			if(chdir(argv[1]) !=0)
 			{
+				if(strcmp(argv[1],"~")==0)
+				{
+					chdir("/home/tanya");
+				}
+				else
 				printf("No such file or Directory\n");
 			}
 		}
 		}
-	
+		else if(strcmp(argv[0],"pwd")==0)
+		{
+			char cwd[2056];
+			printf(getcwd(cwd,sizeof(cwd)));
+		}
+		else if(strcmp(argv[0],"echo")==0)
+		{
+			for(int l =1;l<i;l++)
+				printf("%s ",argv[l]);
+		}
 		else if(fork()==0)
 		{
-		if(execve("/home/tanya/date",argv,NULL)==-1)
+		
+		if(execve(path,argv,NULL)==-1)
 		{
-			
 			printf("Error\n");
 		}
 		}
