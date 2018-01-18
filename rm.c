@@ -17,7 +17,7 @@ int main(int argn, char *argv[])
 	else
 	if(argn==2)
 	{
-		if(strcmp(argv[1],"-d")==0 )
+		if(strcmp(argv[1],"-d")==0 || strcmp(argv[1],"-i")==0 )
 		printf("Invalid Command:- No Directory");
 		else
 		{	
@@ -50,6 +50,26 @@ int main(int argn, char *argv[])
 			printf("Not an Empty Directory");
 		}
 				 
+	}
+	else if(strcmp(argv[1],"-i")==0)
+	{
+		
+			
+			if(fopen(argv[2],"r")!=NULL)
+			{
+				printf("remove regular file '%s'?",argv[2]);
+				char choice[10];
+				gets(choice);
+				if(choice[0] == 'y' || choice[0] == 'Y')
+					remove(argv[2]);
+				
+				 
+			}
+			else
+			{
+				printf("No Such File or is a Directory(--r)");
+			}
+		
 	}
 	
 	
