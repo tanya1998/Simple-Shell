@@ -8,16 +8,23 @@ int main()
 char cmd[256];
 char *arg ;
 char *argv[256];
-char *arguments[256];
+char history[2000][2000];
+int histn =0;
+char cd[2000][2000];
+strcpy(cd[0],"/home/tanya");
+int cnt =0;
 while(1)
 {	
 	printf("gsh:>");
 	gets(cmd);
-
+	strcpy(history[cnt],cmd);
+	cnt++;
 	int i=0;
 	int length =0;
-	
+	char sentence[1000];
+   	
 	arg = strtok(cmd," ");
+	
 	if(strcmp(cmd,"exit")==0)
 	{
 		exit(0);
@@ -31,10 +38,9 @@ while(1)
 		arg = strtok (NULL," ");
 		i++;
 		}
-		char path[] = "/home/tanya/";
+		char *path = (char *)malloc(sizeof(char)); 
+		strcpy(path,"/home/tanya/");
 		strcat(path,argv[0]);
-		printf(argv[0]);
-		//builtin for cd 
 		if(strcmp(argv[0],"cd")==0)
 		{
 		if(argv[1] == NULL)
@@ -48,11 +54,28 @@ while(1)
 				if(strcmp(argv[1],"~")==0)
 				{
 					chdir("/home/tanya");
+					histn++;
+					getcwd(cd[histn],sizeof(cd[histn]));
+					
+				}
+				else if(strcmp(argv[1],"-")==0)
+				{
+					chdir(cd[histn-1]);
+					histn++;
+					getcwd(cd[histn],sizeof(cd[histn]));
+					
 				}
 				else
 				printf("No such file or Directory\n");
 			}
+			else
+			{	
+				histn++;
+				getcwd(cd[histn],sizeof(cd[histn]));
+				
+			}
 		}
+			
 		}
 		else if(strcmp(argv[0],"pwd")==0)
 		{
@@ -63,6 +86,13 @@ while(1)
 		{
 			for(int l =1;l<i;l++)
 				printf("%s ",argv[l]);
+		}
+		else if(strcmp(argv[0],"history")==0)
+		{
+			for(int j=0;j<cnt;j++)
+			{
+				printf("%d %s\n",j+1,history[j]);
+			}
 		}
 		else if(fork()==0)
 		{
