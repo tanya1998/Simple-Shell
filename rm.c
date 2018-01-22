@@ -72,5 +72,6 @@ int main(int argn, char *argv[])
 		
 	}
 	
-	
+	printf("\n");
+	return 0;
 }

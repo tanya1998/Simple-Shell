@@ -38,8 +38,10 @@ while(1)
 		arg = strtok (NULL," ");
 		i++;
 		}
+		
 		char *path = (char *)malloc(sizeof(char)); 
-		strcpy(path,"/home/tanya/");
+		getcwd(path,sizeof(path));
+		//strcpy(path,current);
 		strcat(path,argv[0]);
 		if(strcmp(argv[0],"cd")==0)
 		{
@@ -75,17 +77,67 @@ while(1)
 				
 			}
 		}
-			
+		printf("\n");	
 		}
 		else if(strcmp(argv[0],"pwd")==0)
 		{
 			char cwd[2056];
 			printf(getcwd(cwd,sizeof(cwd)));
+			printf("\n");
 		}
 		else if(strcmp(argv[0],"echo")==0)
 		{
-			for(int l =1;l<i;l++)
-				printf("%s ",argv[l]);
+			if(i >1)
+			{if(strcmp(argv[1],"-n")==0 || strcmp(argv[1],"-E")==0 )
+			{
+			for(int k =2;k<i;k++)
+			{char *ech = strtok(argv[k],"\\'");
+			
+			int p =0;
+		
+			char *echv[256];
+			while(ech!='\0')
+	
+			{	
+			echv[p] = ech;
+			//printf("%s",echv[p]);
+			ech = strtok (NULL,"\\'");
+			p++;
+			}
+			for(int l =0;l<p;l++)
+				{if(strcmp(echv[l],"")==0 && l!=0)
+					printf("%s","\\");
+				printf("%s",echv[l]);}
+			printf(" ");
+			}
+			}
+			else
+			{for(int k=1;k<i;k++)
+			{char *ech = strtok(argv[k],"\\'");
+			
+			int p =0;
+		
+			char *echv[256];
+			while(ech!='\0')
+	
+			{	
+			echv[p] = ech;
+			//printf("%s",echv[p]);
+			ech = strtok (NULL,"\\'");
+			p++;
+			}
+			
+			for(int l =0;l<p;l++)
+				{if(strcmp(echv[l],"")==0 && l!=0)
+					printf("%s","\\");
+				printf("%s",echv[l]);}
+			printf(" ");
+			}}
+			if(strcmp(argv[1],"-n")!=0)
+			printf("\n");}
+			else
+			printf("\n");
+			
 		}
 		else if(strcmp(argv[0],"history")==0)
 		{
@@ -93,6 +145,7 @@ while(1)
 			{
 				printf("%d %s\n",j+1,history[j]);
 			}
+			printf("\n");
 		}
 		else if(fork()==0)
 		{
@@ -110,8 +163,7 @@ while(1)
 	for(i=0;i<256;i++)
 	{
 		argv[i] = NULL;
-	}
-	printf("\n");	
+	}	
 	
 }
 	return 0;

@@ -5,7 +5,7 @@
 #include <string.h>
 int main(int argn, char *argc[])
 {	
-	
+	printf("%d",argn);
 	if(argn<=1)
 	{
 		printf("Invalid Command:- More Parameters expected");
@@ -41,11 +41,13 @@ int main(int argn, char *argc[])
 	{
 		char *arg = strtok(argc[2],"/");
 		int p =0;
+		char cwd[2056];
 		char *argv[256];
 		while(arg!='\0')
 	
 		{	
 		argv[p] = arg;
+		printf("%s",argv[p]);
 		arg = strtok (NULL,"/");
 		p++;
 		}
@@ -57,11 +59,14 @@ int main(int argn, char *argc[])
 			}
 			else
 			{
-			
+		           
 			}
-			chdir(argv[p]);
+			printf("%d",chdir(argv[p]));
+			printf("%s\n",getcwd(cwd,sizeof(cwd)));
+			
 		}
 		
 	}
+	printf("\n");
 	return 0;
 }

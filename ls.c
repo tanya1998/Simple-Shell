@@ -186,6 +186,7 @@ else if (argc == 3)
 		}
 		
 	}
+ printf("\n");
  return 0;
  
 

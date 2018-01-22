@@ -38,7 +38,12 @@
    			struct tm *t = localtime(&now);
    			printf( "%d-%d-%d\n", t->tm_year+1900 ,t->tm_mon+1,t->tm_mday);
 		}
+		else
+		{
+			printf("No such option in date :- only -r and-I\n");
+		}
 	
 	}
+
  	return 0;
 	}
